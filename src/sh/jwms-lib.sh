@@ -8,7 +8,18 @@ JWMS_JENKINS_CRUMB=""
 
 CURL="`which curl`"
 
-function sendToJenkins {
+function _checkRequireFields {
+   l_require=$1
+   l_field=$2
+
+   if [ -z "$l_require" ]; then
+      echo "ERROR: $l_field parameter required"
+      return 0
+   fi
+   return 1
+}
+
+function jwms_send {
   if [ $# -ne 5 ]; then
      echo "ERROR: five parameters required. hex binary, result, duration, display name and description."
      return 1
@@ -20,17 +31,17 @@ function sendToJenkins {
   l_display_name=$4
   l_description=$5
 
-  checkRequireFields "$JWMS_JENKINS_USERNAME" "jenkins username" && return 1
-  checkRequireFields "$JWMS_JENKINS_API_TOKEN" "jenkins api token" && return 1
-  checkRequireFields "$JWMS_JENKINS_HOSTNAME" "jenkins hostname" && return 1
-  checkRequireFields "$JWMS_JENKINS_JOB_NAME" "jenkins job name" && return 1
-  checkRequireFields "$JWMS_JENKINS_CRUMB" "jenkins crumb" && return 1
+  _checkRequireFields "$JWMS_JENKINS_USERNAME" "jenkins username" && return 1
+  _checkRequireFields "$JWMS_JENKINS_API_TOKEN" "jenkins api token" && return 1
+  _checkRequireFields "$JWMS_JENKINS_HOSTNAME" "jenkins hostname" && return 1
+  _checkRequireFields "$JWMS_JENKINS_JOB_NAME" "jenkins job name" && return 1
+  _checkRequireFields "$JWMS_JENKINS_CRUMB" "jenkins crumb" && return 1
 
-  checkRequireFields "$l_hex_bin" "hex binary" && return 1
-  checkRequireFields "$l_result" "result" && return 1
-  checkRequireFields "$l_duration" "duration" && return 1
-  checkRequireFields "$l_display_name" "display name" && return 1
-  checkRequireFields "$l_description" "description" && return 1
+  _checkRequireFields "$l_hex_bin" "hex binary" && return 1
+  _checkRequireFields "$l_result" "result" && return 1
+  _checkRequireFields "$l_duration" "duration" && return 1
+  _checkRequireFields "$l_display_name" "display name" && return 1
+  _checkRequireFields "$l_description" "description" && return 1
 
   $CURL -XPOST \
        -H".crumb:$JWMS_JENKINS_CRUMB" \
@@ -39,13 +50,11 @@ function sendToJenkins {
        "$JWMS_JENKINS_HOSTNAME/job/$JWMS_JENKINS_JOB_NAME/postBuildResult"
 }
 
-function checkRequireFields {
-   l_require=$1
-   l_field=$2
+function jwms_get_jenkins_crumb {
+  _checkRequireFields "$JWMS_JENKINS_USERNAME" "jenkins username" && return 1
+  _checkRequireFields "$JWMS_JENKINS_API_TOKEN" "jenkins api token" && return 1
+  _checkRequireFields "$JWMS_JENKINS_HOSTNAME" "jenkins hostname" && return 1
 
-   if [ -z "$l_require" ]; then
-      echo "ERROR: $l_field parameter required"
-      return 0
-   fi
-   return 1
+  CRUMB=$($CURL -s --user $JWMS_JENKINS_USERNAME:$JWMS_JENKINS_API_TOKEN $JWMS_JENKINS_HOSTNAME/crumbIssuer/api/xml?xpath=concat\(//crumbRequestField,%22:%22,//crumb\))
+  echo $CRUMB
 }
