@@ -46,7 +46,7 @@ function jwms_send {
   $CURL -XPOST \
        -H".crumb:$JWMS_JENKINS_CRUMB" \
        -u "$JWMS_JENKINS_USERNAME:$JWMS_JENKINS_API_TOKEN" \
-       -d "<run><log encoding=\"hexBinary\">$l_hex_bin</log><result>$l_result</result><duration>$l_duration</duration><displayName>$l_display_name</displayName><description>$l_description</description></run>" \
+       --data-binary "<run><log encoding=\"hexBinary\">$l_hex_bin</log><result>$l_result</result><duration>$l_duration</duration><displayName>$l_display_name</displayName><description>$l_description</description></run>" \
        "$JWMS_JENKINS_HOSTNAME/job/$JWMS_JENKINS_JOB_NAME/postBuildResult"
 }
 
