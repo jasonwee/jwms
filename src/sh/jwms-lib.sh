@@ -20,8 +20,10 @@ JWMS_JENKINS_API_TOKEN=""
 JWMS_JENKINS_HOSTNAME=""
 JWMS_JENKINS_JOB_NAME=""
 JWMS_JENKINS_CRUMB=""
+JWMS_CURL_PARAMETER=""
 
 CURL="`which curl`"
+HEXDUMP="`which hexdump`"
 
 function _checkRequireFields {
    l_require=$1
@@ -58,7 +60,9 @@ function jwms_send {
   _checkRequireFields "$l_display_name" "display name" && return 1
   _checkRequireFields "$l_description" "description" && return 1
 
-  $CURL -XPOST \
+  l_hex_bin = jwms_str_to_hex "$l_hex_bin"
+
+  $CURL $JWMS_CURL_PARAMETER -XPOST \
        -H".crumb:$JWMS_JENKINS_CRUMB" \
        -u "$JWMS_JENKINS_USERNAME:$JWMS_JENKINS_API_TOKEN" \
        --data-binary "<run><log encoding=\"hexBinary\">$l_hex_bin</log><result>$l_result</result><duration>$l_duration</duration><displayName>$l_display_name</displayName><description>$l_description</description></run>" \
@@ -72,4 +76,9 @@ function jwms_get_jenkins_crumb {
 
   CRUMB=$($CURL -s --user $JWMS_JENKINS_USERNAME:$JWMS_JENKINS_API_TOKEN $JWMS_JENKINS_HOSTNAME/crumbIssuer/api/xml?xpath=concat\(//crumbRequestField,%22:%22,//crumb\))
   echo $CRUMB
+}
+
+function jwms_str_to_hex {
+  l_string=${1:-}
+  echo "$l_string" | $HEXDUMP -v -e '1/1 "%02x"'
 }
