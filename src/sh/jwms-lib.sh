@@ -60,7 +60,7 @@ function jwms_send {
   _checkRequireFields "$l_display_name" "display name" && return 1
   _checkRequireFields "$l_description" "description" && return 1
 
-  l_hex_bin = jwms_str_to_hex "$l_hex_bin"
+  l_hex_bin=`jwms_str_to_hex "$l_hex_bin"`
 
   $CURL $JWMS_CURL_PARAMETER -XPOST \
        -H".crumb:$JWMS_JENKINS_CRUMB" \
