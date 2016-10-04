@@ -3,7 +3,10 @@ language: python
 python:
  - "3.5"
 
-script: python -c "print('implement me')"
+script:
+ - pwd
+ - cd test/sh
+ - bash jwms-util-datetime-test.sh
 
 notifications:
   slack: just6fun:Eh0j5aOJi6d7bgPzRuZNd7JO
