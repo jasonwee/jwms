@@ -80,5 +80,5 @@ function jwms_get_jenkins_crumb {
 
 function jwms_str_to_hex {
   l_string=${1:-}
-  echo "$l_string" | $HEXDUMP -v -e '1/1 "%02x"'
+  echo -e "$l_string" | $HEXDUMP -v -e '1/1 "%02x"'
 }
