@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.logging.Logger;
 
+import co.weetech.util.StringUtil;
+
 public class Jwms {
 	
 	private static Logger logger = null; 
@@ -59,7 +61,7 @@ public class Jwms {
 		
 		String jenkinsString= "<run><log encoding=\"hexBinary\">%s</log><result>%s</result><duration>%s</duration>"
 				+ "<displayName>%s</displayName><description>%s</description></run>";
-		byte[] outputBytes = String.format(jenkinsString, message, result, duration, displayName, description).getBytes();
+		byte[] outputBytes = String.format(jenkinsString, StringUtil.toHex(message), result, duration, displayName, description).getBytes();
 		OutputStream os = httpCon.getOutputStream();
 		os.write(outputBytes);
 		os.flush();
@@ -98,45 +100,4 @@ public class Jwms {
 		Jwms.logger = logger;
 	}
 	
-	public static void main(String[] args) throws IOException {
-		// jenkins url string
-		String urlString = "";
-		
-		// jenkins crumb 
-		String crumb = "";
-		
-		// jenkins username
-		String username = "";
-		
-		// jenkins api associated with the user
-		String password = "";
-		
-		// the message in hex
-		String message = "444f4e450a";
-		
-		// the result in numeric, 0 is success , others fail
-		String result = "0";
-		
-		// duration in milli seconds
-		String duration = "2000";
-		
-		// the name to display in jenkins for this run
-		String displayName = "local test";
-		
-		// the more elaborative description for this run
-		String description="";
-		
-		// how to actually initalize and send it.
-		Jwms agent = new Jwms(urlString, crumb, username, password, null);
-		agent.send(message, result, duration, displayName, description);
-		
-		// TODO
-		// move the above to test code
-		// we need string to hex method
-		// we need duration second auto convert to milliseconds
-		// we need rpm spec
-	}
-
-
-
 }
