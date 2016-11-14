@@ -22,7 +22,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
 
 import co.weetech.util.StringUtil;
 
@@ -32,12 +33,14 @@ public class Jwms {
 	
 	private static String USER_AGENT = "jwms-lib";
 	private String urlString;
+	private String jobName;
 	private String crumb;
 	private String username;
 	private String password;
 	
-	public Jwms(String url, String crumb, String username, String password, Logger logger) {
-		this.urlString = url;
+	public Jwms(String url, String jobName, String crumb, String username, String password) {
+		this.jobName = jobName;
+		this.urlString = String.format("%s/job/%s/postBuildResult", url, jobName);
 		this.crumb = crumb;
 		this.username = username;
 		this.password = password;
@@ -62,6 +65,9 @@ public class Jwms {
 		String jenkinsString= "<run><log encoding=\"hexBinary\">%s</log><result>%s</result><duration>%s</duration>"
 				+ "<displayName>%s</displayName><description>%s</description></run>";
 		byte[] outputBytes = String.format(jenkinsString, StringUtil.toHex(message), result, duration, displayName, description).getBytes();
+		if (logger != null) {
+			logger.info(String.format(jenkinsString, StringUtil.toHex(message), result, duration, displayName, description));
+		}
 		OutputStream os = httpCon.getOutputStream();
 		os.write(outputBytes);
 		os.flush();
