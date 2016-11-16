@@ -1,7 +1,22 @@
 // https://docs.gradle.org/current/userguide/java_plugin.html
 // https://docs.gradle.org/current/userguide/tutorial_java_projects.html
 
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.netflix.nebula:gradle-ospackage-plugin:4.1.0"
+  }
+}
+
+
 apply plugin: 'java'
+apply plugin: 'nebula.ospackage'
+apply plugin: 'nebula.rpm'
+
 
 version = '0.1.0'
 sourceCompatibility = 1.8
@@ -44,6 +59,10 @@ jar {
    manifest {
       attributes 'Main-Class': 'co.weetech.jwms.Application'
    }
+}
+
+task fooRpm(type: Rpm) {
+   release '1'
 }
 
 // test
