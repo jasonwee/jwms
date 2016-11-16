@@ -5,7 +5,7 @@ Summary:        Jason Wee Monitoring System java implementation
 
 License:        Apache License, Version 2.0
 URL:            https://github.com/jasonwee/jwms
-Source0:        jwms-lib-%{version}.tar.gz
+Source0:        jwms-java-lib-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  java >= 1.8
