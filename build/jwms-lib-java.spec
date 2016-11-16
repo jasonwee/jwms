@@ -9,7 +9,7 @@ Source0:        jwms-java-lib-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  java >= 1.8
-Requires:       java>= 1.8
+Requires:       java >= 1.8
 
 %description
 jwms or Jason Wee Monitor System is a library that bridge between the monitored
@@ -23,7 +23,10 @@ node and the monitor node.
 gradle/gradle-3.1/bin/gradle jar
 
 %install
-install -p -m 644 jwms-java-lib-0.1.0.jar %{buildroot}%{_javadir}/jwms-java-lib-0.1.0.jar
+mkdir -p %{buildroot}%{_javadir}
+mkdir -p %{buildroot}%{_bindir}
+
+install -p -m 644 build/libs/jwms-java-lib-0.1.0.jar %{buildroot}%{_javadir}/jwms-java-lib-0.1.0.jar
 
 %jpackage_script co.weetech.jwms.Application "" "" %{name} jwms-application true
 
