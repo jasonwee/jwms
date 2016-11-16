@@ -1,4 +1,4 @@
-Name:           java-jwms-lib
+Name:           jwms-java-lib
 Version:        0.1.0
 Release:        1%{?dist}
 Summary:        Jason Wee Monitoring System java implementation
