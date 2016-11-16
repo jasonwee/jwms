@@ -20,7 +20,7 @@ node and the monitor node.
 %setup -q
 
 %build
-gradle jar
+gradle/gradle-3.1/bin/gradle jar
 
 %install
 install -p -m 644 jwms-java-lib-0.1.0.jar %{buildroot}%{_javadir}/jwms-java-lib-0.1.0.jar
