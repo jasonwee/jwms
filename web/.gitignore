@@ -1,0 +1,29 @@
+# Created by https://www.gitignore.io/api/play,playframework
+
+#!! ERROR: play is undefined. Use list command to see defined gitignore types !!#
+
+### PlayFramework ###
+# Ignore Play! working directory #
+bin/
+/db
+.eclipse
+/lib/
+/logs/
+/modules
+/project/target
+/target
+tmp/
+test-result
+server.pid
+*.eml
+/dist/
+.cache
+
+# End of https://www.gitignore.io/api/play,playframework
+
+# eclipse settings all ignores because each dev will generate
+# using sbt eclipse
+.classpath
+.gitignore
+.project
+.settings
