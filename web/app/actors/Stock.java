@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class Stock {
+
     public static final class Latest {
         public Latest() {
+
         }
     }
 
     public static final Latest latest = new Latest();
 
     public static final class Update {
+
         public final String symbol;
         public final Double price;
 
@@ -25,6 +28,7 @@ public class Stock {
     }
 
     public static final class History {
+
         public final String symbol;
         public final Double[] history;
 
@@ -35,6 +39,7 @@ public class Stock {
     }
 
     public static final class Watch {
+
         public final String symbol;
 
         public Watch(String symbol) {
@@ -43,6 +48,7 @@ public class Stock {
     }
 
     public static final class Unwatch {
+
         private final String symbol;
 
         public Optional<String> symbol() {
@@ -53,4 +59,5 @@ public class Stock {
             this.symbol = symbol;
         }
     }
+
 }
