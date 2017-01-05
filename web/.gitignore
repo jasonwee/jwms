@@ -11,6 +11,7 @@ bin/
 /logs/
 /modules
 /project/target
+/project/project
 /target
 tmp/
 test-result
@@ -23,7 +24,8 @@ server.pid
 
 # eclipse settings all ignores because each dev will generate
 # using sbt eclipse
-.classpath
-.gitignore
-.project
-.settings
+# for me, i kinda like it to commit to the git
+#.classpath
+#.gitignore
+#.project
+#.settings
