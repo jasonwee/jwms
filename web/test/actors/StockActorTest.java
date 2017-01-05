@@ -13,6 +13,8 @@ import utils.StockQuote;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class StockActorTest {
 	
 	static ActorSystem system;
