@@ -4,13 +4,22 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.japi.Creator;
 import akka.testkit.JavaTestKit;
 import akka.testkit.TestActorRef;
 import akka.testkit.TestProbe;
 import play.Configuration;
 import play.Environment;
+import scala.concurrent.duration.FiniteDuration;
+
+import static org.assertj.core.api.Assertions.*;
+
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.running;
 
 public class UserActorTest {
 	
