@@ -19,3 +19,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Tes
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
 
 LessKeys.compress := true
+
+EclipseKeys.preTasks := Seq(compile in Compile)
+EclipseKeys.projectFlavor := EclipseProjectFlavor.Java           // Java project. Don't expect Scala IDE
+EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.ManagedClasses, EclipseCreateSrc.ManagedResources)  // Use .class files instead of generated .scala files for views and routes
