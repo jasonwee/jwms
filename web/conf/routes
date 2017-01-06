@@ -1,10 +1,12 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
+# GET, PATCH, POST, PUT, DELETE, HEAD, OPTIONS
 
-GET     /                           controllers.HomeController.index
-GET     /ws                         controllers.HomeController.ws
+GET     /                                       controllers.HomeController.index
+GET     /ws                                   controllers.HomeController.ws
 GET     /sentiment/:symbol          controllers.StockSentiment.get(symbol)
+GET     /collect                             controllers.CollectorController.collect
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                      controllers.Assets.at(path="/public", file)
