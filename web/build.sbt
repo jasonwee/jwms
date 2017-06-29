@@ -18,8 +18,15 @@ val akkaVersion = "2.4.11"
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
 
+libraryDependencies ++= Seq(
+  javaJpa,
+  "org.hibernate" % "hibernate-core" % "5.2.5.Final"
+)
+
 LessKeys.compress := true
 
 EclipseKeys.preTasks := Seq(compile in Compile)
 EclipseKeys.projectFlavor := EclipseProjectFlavor.Java           // Java project. Don't expect Scala IDE
 EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.ManagedClasses, EclipseCreateSrc.ManagedResources)  // Use .class files instead of generated .scala files for views and routes
+
+PlayKeys.externalizeResources := false
