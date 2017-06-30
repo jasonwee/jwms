@@ -51,9 +51,11 @@ public class HomeController extends Controller {
         this.actorSystem = actorSystem;
     }
 
+    /*
     public Result index() {
         return ok(views.html.index.render(request()));
     }
+    */
 
     public WebSocket ws() {
         return WebSocket.Json.acceptOrResult(request -> {
