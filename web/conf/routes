@@ -3,7 +3,7 @@
 # ~~~~
 # GET, PATCH, POST, PUT, DELETE, HEAD, OPTIONS
 
-GET     /                                       controllers.HomeController.index
+GET     /                                       controllers.CollectorController.index
 GET     /ws                                   controllers.HomeController.ws
 GET     /sentiment/:symbol          controllers.StockSentiment.get(symbol)
 GET     /index                             controllers.CollectorController.index
