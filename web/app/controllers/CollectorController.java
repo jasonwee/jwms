@@ -1,13 +1,18 @@
 package controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import models.Person;
+import models.PersonRepository;
+import play.data.Form;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
+import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -16,30 +21,32 @@ import static play.libs.Json.toJson;
 public class CollectorController extends Controller {
 	
 	private final FormFactory formFactory;
-	private final JPAApi jpaApi;
+	private final PersonRepository personRepository;
+	private final HttpExecutionContext ec;
 
 	@Inject
-	public CollectorController(FormFactory formFactory, JPAApi jpaApi) {
+	public CollectorController(FormFactory formFactory, PersonRepository personRepository, HttpExecutionContext ec) {
 		this.formFactory = formFactory;
-		this.jpaApi = jpaApi;
+		this.personRepository = personRepository;
+		this.ec = ec;
 	}
 
-	public Result index1() {
-		//return ok(views.html.index1.render());
-		return ok();
-	}
+    public Result index() {
+    	Form<Person> form = formFactory.form(Person.class);
+        return ok(views.html.index.render(form));
+    }
 
-	@Transactional
-	public Result addPerson() {
+	public CompletionStage<Result> addPerson() {
 		Person person = formFactory.form(Person.class).bindFromRequest().get();
-		jpaApi.em().persist(person);
-		return redirect(routes.CollectorController.index());
+		return personRepository.add(person).thenApplyAsync(p -> {
+			return redirect(routes.CollectorController.index());
+		}, ec.current());
 	}
 
-	@Transactional(readOnly=true)
-	public Result getPersons() {
-		List<Person> persons = (List<Person>) jpaApi.em().createQuery("select p from Person p").getResultList();
-		return ok(toJson(persons));
+	public CompletionStage<Result> getPersons() {
+		return personRepository.list().thenApplyAsync(personStream -> {
+			return ok(toJson(personStream.collect(Collectors.toList())));
+		}, ec.current());
 	}
 
 	// -----------old-------------
@@ -52,7 +59,7 @@ public class CollectorController extends Controller {
 		return ok("collected " + request() + "!");
 	}
 
-	public Result index() {
+	public Result index1() {
 		//     return temporaryRedirect("/user/home");
 		return redirect("/login");
 	}
