@@ -3,13 +3,13 @@
 # ~~~~
 # GET, PATCH, POST, PUT, DELETE, HEAD, OPTIONS
 
-GET     /                                       controllers.CollectorController.index
+GET     /                                       controllers.CollectorController.index()
 GET     /ws                                   controllers.HomeController.ws
 GET     /sentiment/:symbol          controllers.StockSentiment.get(symbol)
 GET     /index                             controllers.CollectorController.index
 GET     /collect                             controllers.CollectorController.collect
-POST   /person                            controllers.CollectorController.addPerson
-GET     /persons                           controllers.CollectorController.getPersons
+POST   /person                            controllers.CollectorController.addPerson()
+GET     /persons                           controllers.CollectorController.getPersons()
 
 #####################
 
