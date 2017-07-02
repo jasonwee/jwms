@@ -1,0 +1,12 @@
+@()
+
+@main("welcome to play") {
+  <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+  
+  <ul id="persons"></ul>
+  
+  <form method="POST" action="@routes.CollectorController.addPerson()">
+    <input type="text" id="name" name="name"></input>
+    <button>Add Person</button>
+  </form>
+}
