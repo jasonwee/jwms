@@ -6,6 +6,11 @@ import akka.actor.ActorSystem;
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.ExecutionContextExecutor;
 
+/**
+ * custom execution context wired to "database.dispatcher" thread pool
+ * @author jason
+ *
+ */
 public class DatabaseExecutionContext implements ExecutionContextExecutor {
 	
 	private final ExecutionContext executionContext;
