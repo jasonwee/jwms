@@ -23,6 +23,9 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-core" % "5.2.5.Final"
 )
 
+libraryDependencies += "com.mchange" % "c3p0" % "0.9.5.2"
+
+
 LessKeys.compress := true
 
 EclipseKeys.preTasks := Seq(compile in Compile)
