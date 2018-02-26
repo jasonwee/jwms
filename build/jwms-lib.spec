@@ -1,6 +1,6 @@
 Summary: Jason Wee Monitoring System
 Name: jwms-lib
-Version: 0.2.1
+Version: 0.2.2
 Release: 0
 URL: https://github.com/jasonwee/jwms
 License: Apache-2.0
@@ -36,6 +36,9 @@ rm -rf ${RPM_BUILD_ROOT}
 %attr(644,root,root) /usr/share/jwms-lib/sh/jwms-util-datetime.sh
 
 %changelog
+* Mon Feb 26 2018 Jason Wee <peichieh@gmail.com>
+- jenkins 2 change .crumb to Jenkins-Crumb
+
 * Tue Oct 04 2016 Jason Wee <peichieh@gmail.com>
 - fix jwms_send function call
 - support for backslash character when convert to hex
